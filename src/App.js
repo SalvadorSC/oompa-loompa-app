@@ -1,24 +1,60 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import FetchedItemDetails from "./Components/FetchedItemDetails/FetchedItemDetails";
+import FetchedItemsList from "./Components/FetchedItemsList/FetchedItemsList";
+import PokemonList from "./Components/PokemonList/PokemonList";
+import Header from "./Components/Header/Header";
+import { FetchedItemProvider } from "./context/FetchedItemsContext";
+import PokemonDetails from "./Components/PokemonDetails/PokemonDetails";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Router>
+        <div>
+          <nav className="navBar">
+            <ul className="nav-list">
+              <li>
+                <Link to="/pokemon">
+                  <img
+                    className="oo-loo-logo"
+                    src="https://s3.eu-central-1.amazonaws.com/napptilus/level-test/imgs/logo-umpa-loompa.png"
+                    alt="Oompa Loompa Crew Logo"
+                  />
+                </Link>
+                <Link to="/">
+                  <span className="nav-title">OOMPA LOOMPA CREW</span>
+                </Link>
+              </li>
+            </ul>
+          </nav>
+          <Switch>
+            <Route path="/pokemon/:name">
+              <FetchedItemProvider>
+                <PokemonDetails />
+              </FetchedItemProvider>
+            </Route>
+            <Route path="/pokemon">
+              <FetchedItemProvider>
+                <Header />
+                <PokemonList />
+              </FetchedItemProvider>
+            </Route>
+            <Route path="/:id">
+              <FetchedItemProvider>
+                <FetchedItemDetails />
+              </FetchedItemProvider>
+            </Route>
+            <Route path="/">
+              <FetchedItemProvider>
+                <Header />
+                <FetchedItemsList />
+              </FetchedItemProvider>
+            </Route>
+          </Switch>
+        </div>
+      </Router>
+    </>
   );
 }
 
